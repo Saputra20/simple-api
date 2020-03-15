@@ -2,9 +2,19 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const product = require('./api/router/products');
 const order = require('./api/router/orders');
+
+mongoose.connect(
+    'mongodb://saputra:' +
+    process.env.MONGO_ATLAS_PW +
+    '@simple-api-shard-00-00-wrnvo.mongodb.net:27017,simple-api-shard-00-01-wrnvo.mongodb.net:27017,simple-api-shard-00-02-wrnvo.mongodb.net:27017/test?ssl=true&replicaSet=simple-api-shard-0&authSource=admin&retryWrites=true&w=majority',
+    {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+    });
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
